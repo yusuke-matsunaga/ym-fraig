@@ -10,7 +10,7 @@
 
 
 #include "ym/fraig.h"
-#include "FraigHandle.h"
+#include "ym/FraigHandle.h"
 #include "StructHash.h"
 #include "PatHash.h"
 #include "ym/Expr.h"

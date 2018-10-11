@@ -11,6 +11,7 @@
 
 #include "ym/fraig.h"
 #include "ym/FraigHandle.h"
+#include "ym/bnet.h"
 #include "ym/Expr.h"
 #include "ym/SatBool3.h"
 #include "ym/SatSolverType.h"
@@ -174,6 +175,15 @@ public:
 		int input_id,
 		bool inv);
 
+  /// @brief BnNetwork をインポートする．
+  /// @param[in] network インポートするネットワーク
+  /// @param[in] input_handles ネットワークの入力に接続するハンドルのリスト
+  /// @param[out] output_handles ネットワークの出力に対応したハンドルのリスト
+  void
+  import_subnetwork(const BnNetwork& network,
+		    const vector<FraigHandle>& input_handles,
+		    vector<FraigHandle>& output_handles);
+
 
 public:
   //////////////////////////////////////////////////////////////////////
@@ -243,7 +253,7 @@ private:
   //////////////////////////////////////////////////////////////////////
 
   // 実装クラス
-  std::uniqe_ptr<FraigMgrImpl> mRep;
+  unique_ptr<FraigMgrImpl> mRep;
 
 };
 
@@ -404,6 +414,6 @@ FraigMgr::make_xnor(const vector<FraigHandle>& edge_list)
   return ~_make_xor(edge_list, 0, n);
 }
 
-END_NAMESPACE_FRIAG
+END_NAMESPACE_FRAIG
 
 #endif // FRAIGMGR_H

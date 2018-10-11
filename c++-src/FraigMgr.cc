@@ -8,9 +8,12 @@
 
 
 #include "ym/FraigMgr.h"
+#include "FraigMgrImpl.h"
 #include "FraigNode.h"
-#include "ym/StopWatch.h"
-#include "ym/SatStats.h"
+#include "ym/BnNetwork.h"
+#include "ym/BnNode.h"
+#include "ym/BnNodeType.h"
+#include "ym/Range.h"
 
 
 #if defined(YM_DEBUG)
@@ -22,7 +25,7 @@
 #endif
 
 
-BEGIN_NAMESPACE_EQUIV
+BEGIN_NAMESPACE_FRAIG
 
 BEGIN_NONAMESPACE
 
@@ -152,6 +155,122 @@ FraigMgr::make_cofactor(FraigHandle edge,
   return ans;
 }
 
+// @brief BnNetwork をインポートする．
+// @param[in] network インポートするネットワーク
+// @param[in] input_handles ネットワークの入力に接続するハンドルのリスト
+// @param[out] output_handles ネットワークの出力に対応したハンドルのリスト
+void
+FraigMgr::import_subnetwork(const BnNetwork& network,
+			    const vector<FraigHandle>& input_handles,
+			    vector<FraigHandle>& output_handles)
+{
+  // network のノードの番号をキーとして対応するハンドルを収める配列
+  vector<FraigHandle> h_map(network.node_num());
+
+  //////////////////////////////////////////////////////////////////////
+  // 外部入力に対応するハンドルを登録する．
+  //////////////////////////////////////////////////////////////////////
+  int ni = network.input_num();
+  ASSERT_COND( input_handles.size() == ni );
+  for ( auto i: Range(ni) ) {
+    int id = network.input_id(i);
+    h_map[id] = input_handles[i];
+  }
+
+  //////////////////////////////////////////////////////////////////////
+  // 論理ノードを作成する．
+  //////////////////////////////////////////////////////////////////////
+  int nl = network.logic_num();
+  for ( auto i: Range(nl) ) {
+    int id = network.logic_id(i);
+    auto node = network.node(id);
+
+    // ファンインのノードに対応するハンドルを求める．
+    int ni = node->fanin_num();
+    vector<FraigHandle> fanin_handles(ni);
+    for ( int i = 0; i < ni; ++ i ) {
+      fanin_handles[i] = h_map[node->fanin(i)];
+    }
+
+    // 個々の関数タイプに従って fraig を生成する．
+    BnNodeType logic_type = node->type();
+    FraigHandle ans;
+    switch ( logic_type ) {
+    case BnNodeType::C0:
+      ans = make_zero();
+      break;
+
+    case BnNodeType::C1:
+      ans = make_one();
+      break;
+
+    case BnNodeType::Buff:
+      ans = make_buff(fanin_handles[0]);
+      break;
+
+    case BnNodeType::Not:
+      ans = make_not(fanin_handles[0]);
+      break;
+
+    case BnNodeType::And:
+      ans = make_and(fanin_handles);
+      break;
+
+    case BnNodeType::Nand:
+      ans = make_nand(fanin_handles);
+      break;
+
+    case BnNodeType::Or:
+      ans = make_or(fanin_handles);
+      break;
+
+    case BnNodeType::Nor:
+      ans = make_nor(fanin_handles);
+      break;
+
+    case BnNodeType::Xor:
+      ans = make_xor(fanin_handles);
+      break;
+
+    case BnNodeType::Xnor:
+      ans = make_xnor(fanin_handles);
+      break;
+
+    case BnNodeType::Expr:
+      ans = make_expr(network.expr(node->expr_id()), fanin_handles);
+      break;
+
+    case BnNodeType::TvFunc:
+      {
+	TvFunc tv = node->func();
+	// 未完
+      }
+      ASSERT_NOT_REACHED;
+      break;
+
+    default:
+      ASSERT_NOT_REACHED;
+      break;
+    }
+
+    // 登録しておく．
+    h_map[id] = ans;
+  }
+
+  //////////////////////////////////////////////////////////////////////
+  // 外部出力のマップを作成する．
+  //////////////////////////////////////////////////////////////////////
+  int no = network.output_num();
+  output_handles.clear();
+  output_handles.resize(no);
+  for ( auto i: Range(no) ) {
+    int id = network.output_id(i);
+    auto node = network.node(id);
+    int iid = node->fanin();
+    output_handles[i] = h_map[iid];
+  }
+}
+
 // @brief 複数のノードの AND を取る．
 // @param[in] edge_list 入力の AIG ハンドルのリスト
 // @param[in] start_pos 開始位置
@@ -239,4 +358,4 @@ FraigMgr::set_loop_limit(int val)
   mRep->set_loop_limit(val);
 }
 
-END_NAMESPACE_EQUIV
+END_NAMESPACE_FRAIG

@@ -12,7 +12,7 @@
 #include "FraigHash.h"
 
 
-BEGIN_NAMESPACE_FRIAG
+BEGIN_NAMESPACE_FRAIG
 
 class FraigMgrImpl;
 class FraigHandle;
@@ -73,6 +73,6 @@ private:
 // インライン関数の定義
 //////////////////////////////////////////////////////////////////////
 
-END_NAMESPACE_FRIAG
+END_NAMESPACE_FRAIG
 
 #endif // PATHASH_H

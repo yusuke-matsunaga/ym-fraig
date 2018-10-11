@@ -13,7 +13,7 @@
 #include "ym/Range.h"
 
 
-BEGIN_NAMESPACE_FRIAG
+BEGIN_NAMESPACE_FRAIG
 
 //////////////////////////////////////////////////////////////////////
 // PatHash
@@ -93,4 +93,4 @@ PatHash::add(FraigNode* node)
   ++ mNum;
 }
 
-END_NAMESPACE_FRIAG
+END_NAMESPACE_FRAIG

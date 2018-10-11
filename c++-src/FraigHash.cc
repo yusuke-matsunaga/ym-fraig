@@ -11,7 +11,7 @@
 #include "ym/Range.h"
 
 
-BEGIN_NAMESPACE_EQUIV
+BEGIN_NAMESPACE_FRAIG
 
 //////////////////////////////////////////////////////////////////////
 // FraigHash
@@ -62,4 +62,4 @@ FraigHash::alloc_table(int req_size)
   mNextLimit = static_cast<int>(mHashSize * 1.8);
 }
 
-END_NAMESPACE_EQUIV
+END_NAMESPACE_FRAIG

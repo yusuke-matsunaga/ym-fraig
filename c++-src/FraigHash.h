@@ -78,6 +78,6 @@ protected:
 // インライン関数の定義
 //////////////////////////////////////////////////////////////////////
 
-END_NAMESPACE_FRIAG
+END_NAMESPACE_FRAIG
 
 #endif // FRAIGHASH_H

@@ -15,7 +15,7 @@
 #include "ym/HashSet.h"
 
 
-BEGIN_NAMESPACE_EQUIV
+BEGIN_NAMESPACE_FRAIG
 
 class FraigNode;
 

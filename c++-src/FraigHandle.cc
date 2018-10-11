@@ -7,12 +7,12 @@
 /// All rights reserved.
 
 
-#include "FraigHandle.h"
+#include "ym/FraigHandle.h"
 #include "FraigNode.h"
 #include "ym/SatLiteral.h"
 
 
-BEGIN_NAMESPACE_EQUIV
+BEGIN_NAMESPACE_FRAIG
 
 //////////////////////////////////////////////////////////////////////
 // FraigHandle
@@ -109,4 +109,4 @@ operator<<(ostream& s,
   return s;
 }
 
-END_NAMESPACE_EQUIV
+END_NAMESPACE_FRAIG

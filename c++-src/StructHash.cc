@@ -12,7 +12,7 @@
 #include "ym/Range.h"
 
 
-BEGIN_NAMESPACE_FRIAG
+BEGIN_NAMESPACE_FRAIG
 
 //////////////////////////////////////////////////////////////////////
 // StructHash
@@ -81,4 +81,4 @@ StructHash::add(FraigNode* node)
   ++ mNum;
 }
 
-END_NAMESPACE_FRIAG
+END_NAMESPACE_FRAIG

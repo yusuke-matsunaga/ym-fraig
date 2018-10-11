@@ -10,7 +10,7 @@
 
 
 #include "FraigHash.h"
-#include "FraigHandle.h"
+#include "ym/FraigHandle.h"
 
 
 BEGIN_NAMESPACE_FRAIG
