@@ -21,4 +21,19 @@ BEGIN_NAMESPACE(nsFraig)
 END_NAMESPACE(nsFraig) \
 END_NAMESPACE_YM
 
+
+BEGIN_NAMESPACE_FRAIG
+
+class FraigMgr;
+class FraigHandle;
+
+END_NAMESPACE_FRAIG
+
+BEGIN_NAMESPACE_YM
+
+using nsFraig::FraigMgr;
+using nsFraig::FraigHandle;
+
+END_NAMESPACE_YM
+
 #endif // FRAIG_H

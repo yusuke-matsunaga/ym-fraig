@@ -358,4 +358,11 @@ FraigMgr::set_loop_limit(int val)
   mRep->set_loop_limit(val);
 }
 
+// @brief 内部の統計情報を出力する．
+void
+FraigMgr::dump_stats(ostream& s)
+{
+  mRep->dump_stats(s);
+}
+
 END_NAMESPACE_FRAIG
