@@ -25,7 +25,6 @@ class FraigNode;
 //////////////////////////////////////////////////////////////////////
 class FraigHandle
 {
-  //friend class FraigMgr;
   friend class FraigNode;
   friend class StructHash;
 
@@ -42,6 +41,16 @@ public:
   /// @param[in] inv 反転している時に true とするフラグ
   FraigHandle(FraigNode* node,
 	      bool inv);
+
+  /// @brief 定数０のハンドルを返す．
+  static
+  FraigHandle
+  zero();
+
+  /// @brief 定数1のハンドルを返す．
+  static
+  FraigHandle
+  one();
 
   /// @brief デストラクタ
   ~FraigHandle();
@@ -230,6 +239,22 @@ FraigHandle::FraigHandle(FraigNode* node,
 			 bool inv)
 {
   mPackedData = reinterpret_cast<ympuint>(node) | inv;
+}
+
+// @brief 定数０のハンドルを返す．
+inline
+FraigHandle
+FraigHandle::zero()
+{
+  return FraigHandle(nullptr, false);
+}
+
+// @brief 定数1のハンドルを返す．
+inline
+FraigHandle
+FraigHandle::one()
+{
+  return FraigHandle(nullptr, true);
 }
 
 // @brief デストラクタ

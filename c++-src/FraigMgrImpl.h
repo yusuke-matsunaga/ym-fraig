@@ -71,14 +71,6 @@ public:
   // 構造(FraigNode)を作成するメンバ関数
   //////////////////////////////////////////////////////////////////////
 
-  /// @brief 定数0関数をつくる．
-  FraigHandle
-  make_zero();
-
-  /// @brief 定数1関数をつくる．
-  FraigHandle
-  make_one();
-
   /// @brief 外部入力を作る．
   FraigHandle
   make_input();
@@ -87,12 +79,6 @@ public:
   /// @param[in] edge1, edge2 入力の AIG ハンドル
   FraigHandle
   make_and(FraigHandle edge1,
-	   FraigHandle edge2);
-
-  /// @brief 2つのノードの XOR を作る．
-  /// @param[in] edge1, edge2 入力の AIG ハンドル
-  FraigHandle
-  make_xor(FraigHandle edge1,
 	   FraigHandle edge2);
 
 
@@ -386,158 +372,6 @@ FraigMgrImpl::node(int pos) const
   ASSERT_COND( pos >= 0 && pos < node_num() );
 
   return mAllNodes[pos];
-}
-
-// @brief 定数0関数をつくる．
-inline
-FraigHandle
-FraigMgrImpl::make_zero()
-{
-  return FraigHandle(nullptr, false);
-}
-
-// @brief 定数1関数をつくる．
-inline
-FraigHandle
-FraigMgrImpl::make_one()
-{
-  return FraigHandle(nullptr, true);
-}
-
-// @brief バッファを作る．
-inline
-FraigHandle
-FraigMgrImpl::make_buff(FraigHandle edge1)
-{
-  return edge1;
-}
-
-// @brief NOTを作る．
-inline
-FraigHandle
-FraigMgrImpl::make_not(FraigHandle edge1)
-{
-  return ~edge1;
-}
-
-// @brief 複数のノードの AND を取る．
-// @param[in] edge_list 入力の AIG ハンドルのリスト
-inline
-FraigHandle
-FraigMgrImpl::make_and(const vector<FraigHandle>& edge_list)
-{
-  int n = edge_list.size();
-  ASSERT_COND( n > 0 );
-  return _make_and(edge_list, 0, n, false);
-}
-
-// @brief 2つのノードの NAND を作る．
-// @param[in] edge1, edge2 入力の AIG ハンドル
-inline
-FraigHandle
-FraigMgrImpl::make_nand(FraigHandle edge1,
-		    FraigHandle edge2)
-{
-  return ~make_and(edge1, edge2);
-}
-
-// @brief 複数のノードの NAND を作る．
-// @param[in] edge_list 入力の AIG ハンドルのリスト
-inline
-FraigHandle
-FraigMgrImpl::make_nand(const vector<FraigHandle>& edge_list)
-{
-  int n = edge_list.size();
-  ASSERT_COND( n > 0 );
-  return ~_make_and(edge_list, 0, n, false);
-}
-
-// @brief 2つのノードの OR を取る．
-// @param[in] edge1, edge2 入力の AIG ハンドル
-inline
-FraigHandle
-FraigMgrImpl::make_or(FraigHandle edge1,
-		  FraigHandle edge2)
-{
-  return ~make_and(~edge1, ~edge2);
-}
-
-// @brief 複数のノードの OR を取る．
-// @param[in] edge_list 入力の AIG ハンドルのリスト
-inline
-FraigHandle
-FraigMgrImpl::make_or(const vector<FraigHandle>& edge_list)
-{
-  int n = edge_list.size();
-  ASSERT_COND( n > 0 );
-  return ~_make_and(edge_list, 0, n, true);
-}
-
-// @brief 2つのノードの NOR を作る．
-// @param[in] edge1, edge2 入力の AIG ハンドル
-inline
-FraigHandle
-FraigMgrImpl::make_nor(FraigHandle edge1,
-		   FraigHandle edge2)
-{
-  return make_and(~edge1, ~edge2);
-}
-
-// @brief 複数のノードの NOR を作る．．
-// @param[in] edge_list 入力の AIG ハンドルのリスト
-inline
-FraigHandle
-FraigMgrImpl::make_nor(const vector<FraigHandle>& edge_list)
-{
-  int n = edge_list.size();
-  ASSERT_COND( n > 0 );
-  return _make_and(edge_list, 0, n, true);
-}
-
-// @brief 2つのノードの XOR を取る．
-// @param[in] edge1, edge2 入力の AIG ハンドル
-inline
-FraigHandle
-FraigMgrImpl::make_xor(FraigHandle edge1,
-		   FraigHandle edge2)
-{
-  FraigHandle tmp1 = make_and( edge1, ~edge2);
-  FraigHandle tmp2 = make_and(~edge1,  edge2);
-  return make_or(tmp1, tmp2);
-}
-
-// @brief 複数のノードの XOR を取る．
-// @param[in] edge_list 入力の AIG ハンドルのリスト
-inline
-FraigHandle
-FraigMgrImpl::make_xor(const vector<FraigHandle>& edge_list)
-{
-  int n = edge_list.size();
-  ASSERT_COND( n > 0 );
-  return _make_xor(edge_list, 0, n);
-}
-
-// @brief 2つのノードの XNOR を作る．
-// @param[in] edge1, edge2 入力の AIG ハンドル
-inline
-FraigHandle
-FraigMgrImpl::make_xnor(FraigHandle edge1,
-		    FraigHandle edge2)
-{
-  FraigHandle tmp1 = make_and( edge1, ~edge2);
-  FraigHandle tmp2 = make_and(~edge1,  edge2);
-  return make_nor(tmp1, tmp2);
-}
-
-// @brief 複数のノードの XNOR を作る．
-// @param[in] edge_list 入力の AIG ハンドルのリスト
-inline
-FraigHandle
-FraigMgrImpl::make_xnor(const vector<FraigHandle>& edge_list)
-{
-  int n = edge_list.size();
-  ASSERT_COND( n > 0 );
-  return ~_make_xor(edge_list, 0, n);
 }
 
 END_NAMESPACE_FRAIG

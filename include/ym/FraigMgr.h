@@ -257,7 +257,7 @@ inline
 FraigHandle
 FraigMgr::make_zero()
 {
-  return FraigHandle(nullptr, false);
+  return FraigHandle::zero();
 }
 
 // @brief 定数1関数をつくる．
@@ -265,7 +265,7 @@ inline
 FraigHandle
 FraigMgr::make_one()
 {
-  return FraigHandle(nullptr, true);
+  return FraigHandle::one();
 }
 
 // @brief バッファを作る．

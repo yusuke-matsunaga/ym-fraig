@@ -100,7 +100,7 @@ FraigMgrImpl::make_and(FraigHandle handle1,
 
   // trivial な場合の処理
   if ( handle1.is_zero() || handle2.is_zero() ) {
-    ans = make_zero();
+    ans = FraigHandle::zero();
   }
   else if ( handle1.is_one() ) {
     ans = handle2;
@@ -113,7 +113,7 @@ FraigMgrImpl::make_and(FraigHandle handle1,
   }
   else if ( handle1.node() == handle2.node() ) {
     // handle1.inv != handle2.inv() のはず
-    ans = make_zero();
+    ans = FraigHandle::zero();
   }
   else {
     // 順番の正規化
@@ -193,7 +193,7 @@ FraigMgrImpl::verify_const(FraigNode* node,
     if ( stat == SatBool3::True ) {
       // 定数0と等価だった．
       node->set_rep(nullptr, false);
-      ans = make_zero();
+      ans = FraigHandle::zero();
     }
     else if ( stat == SatBool3::False ) {
       // 反例をパタンに加えておく．
@@ -208,7 +208,7 @@ FraigMgrImpl::verify_const(FraigNode* node,
     if ( stat == SatBool3::True ) {
       // 定数1と等価だった．
       node->set_rep(nullptr, true);
-      ans = make_one();
+      ans = FraigHandle::one();
     }
     else if ( stat == SatBool3::False ) {
       // 反例をパタンに加えておく．
