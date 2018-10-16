@@ -189,7 +189,7 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
     int ni = node->fanin_num();
     vector<FraigHandle> fanin_handles(ni);
     for ( int i = 0; i < ni; ++ i ) {
-      fanin_handles[i] = h_map[node->fanin(i)];
+      fanin_handles[i] = h_map[node->fanin_id(i)];
     }
 
     // 個々の関数タイプに従って fraig を生成する．
@@ -242,7 +242,7 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
 
     case BnNodeType::TvFunc:
       {
-	TvFunc tv = node->func();
+	TvFunc tv = network.func(node->func_id());
 	// 未完
       }
       ASSERT_NOT_REACHED;
@@ -264,9 +264,7 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
   output_handles.clear();
   output_handles.resize(no);
   for ( auto i: Range(no) ) {
-    int id = network.output_id(i);
-    auto node = network.node(id);
-    int iid = node->fanin();
+    int iid = network.output_src_id(i);
     output_handles[i] = h_map[iid];
   }
 }
