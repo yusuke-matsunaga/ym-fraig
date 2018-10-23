@@ -22,7 +22,7 @@ include_directories(
 #  テスト用のターゲットの設定
 # ===================================================================
 
-add_executable ( fraig_test
+ym_add_gtest ( fraig_FraigMgr_test
   fraig_test.cc
   $<TARGET_OBJECTS:ym_base_ad>
   $<TARGET_OBJECTS:ym_logic_ad>
@@ -30,22 +30,6 @@ add_executable ( fraig_test
   $<TARGET_OBJECTS:ym_cell_ad>
   $<TARGET_OBJECTS:ym_bnet_ad>
   $<TARGET_OBJECTS:ym_fraig_ad>
-  )
-
-target_compile_options ( fraig_test
-  PRIVATE "-g"
-  )
-
-target_compile_definitions ( fraig_test
-  PRIVATE "-DDATAPATH=\"${PROJECT_SOURCE_DIR}/ym-fraig/testdata/\""
-  )
-
-target_link_libraries ( fraig_test
-  ${YM_LIB_DEPENDS}
-  pthread
-  ${GTEST_BOTH_LIBRARIES}
-  )
-
-add_test ( fraig_test
-  fraig_test
+  DEFINITIONS
+  "-DDATAPATH=\"${PROJECT_SOURCE_DIR}/ym-fraig/testdata/\""
   )
