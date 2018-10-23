@@ -183,17 +183,17 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
   int nl = network.logic_num();
   for ( auto i: Range(nl) ) {
     int id = network.logic_id(i);
-    auto node = network.node(id);
+    auto& node = network.node(id);
 
     // ファンインのノードに対応するハンドルを求める．
-    int ni = node->fanin_num();
+    int ni = node.fanin_num();
     vector<FraigHandle> fanin_handles(ni);
     for ( int i = 0; i < ni; ++ i ) {
-      fanin_handles[i] = h_map[node->fanin_id(i)];
+      fanin_handles[i] = h_map[node.fanin_id(i)];
     }
 
     // 個々の関数タイプに従って fraig を生成する．
-    BnNodeType logic_type = node->type();
+    BnNodeType logic_type = node.type();
     FraigHandle ans;
     switch ( logic_type ) {
     case BnNodeType::C0:
@@ -237,12 +237,12 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
       break;
 
     case BnNodeType::Expr:
-      ans = make_expr(network.expr(node->expr_id()), fanin_handles);
+      ans = make_expr(network.expr(node.expr_id()), fanin_handles);
       break;
 
     case BnNodeType::TvFunc:
       {
-	TvFunc tv = network.func(node->func_id());
+	TvFunc tv = network.func(node.func_id());
 	// 未完
       }
       ASSERT_NOT_REACHED;

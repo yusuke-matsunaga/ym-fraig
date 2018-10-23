@@ -17,21 +17,18 @@ BEGIN_NAMESPACE_FRAIG
 
 TEST(EquivTest, EquivTest1)
 {
-  BnNetwork network1;
-  BnNetwork network2;
-
   string filename1 = "C499.blif";
   string path1 = DATAPATH + filename1;
-  bool stat1 = read_blif(network1, path1);
-  ASSERT_TRUE( stat1 );
+  BnNetwork network1 = BnNetwork::read_blif(path1);
+  ASSERT_TRUE( network1.node_num() != 0 );
 
   int ni = network1.input_num();
   int no = network1.output_num();
 
   string filename2 = "C1355.blif";
   string path2 = DATAPATH + filename2;
-  bool stat2 = read_blif(network2, path2);
-  ASSERT_TRUE( stat2 );
+  BnNetwork network2 = BnNetwork::read_blif(path2);
+  ASSERT_TRUE( network2.node_num() != 0 );
   ASSERT_TRUE( network2.input_num() == ni );
   ASSERT_TRUE( network2.output_num() == no );
 
