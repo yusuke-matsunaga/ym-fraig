@@ -3,6 +3,13 @@
 # インクルードパスの設定
 # ===================================================================
 include_directories (
+  ${PROJECT_SOURCE_DIR}/ym-common/include
+  ${PROJECT_SOURCE_DIR}/ym-base/include
+  ${PROJECT_SOURCE_DIR}/ym-logic/include
+  ${PROJECT_SOURCE_DIR}/ym-sat/include
+  ${PROJECT_SOURCE_DIR}/ym-cell/include
+  ${PROJECT_SOURCE_DIR}/ym-bnet/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
   )
 
 
