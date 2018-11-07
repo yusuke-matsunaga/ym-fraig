@@ -426,6 +426,7 @@ FraigMgrImpl::new_node()
   FraigNode* node = new (p) FraigNode();
   node->mVarId = mSolver.new_variable();
   ASSERT_COND(node->mVarId.val() == mAllNodes.size() );
+  mSolver.freeze_literal(SatLiteral(node->mVarId));
   init_pat(node);
   mAllNodes.push_back(node);
   return node;
