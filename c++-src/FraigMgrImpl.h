@@ -15,10 +15,10 @@
 #include "PatHash.h"
 #include "ym/Expr.h"
 #include "ym/SimpleAlloc.h"
-#include "ym/RandGen.h"
 #include "ym/SatBool3.h"
 #include "ym/SatSolverType.h"
 #include "ym/SatSolver.h"
+#include <random>
 
 
 BEGIN_NAMESPACE_FRAIG
@@ -296,7 +296,7 @@ private:
   PatHash mHashTable2;
 
   // 乱数発生器
-  RandGen mRandGen;
+  std::mt19937 mRandGen;
 
   // SATソルバ
   SatSolver mSolver;

@@ -9,6 +9,7 @@
 
 #include "FraigMgrImpl.h"
 #include "FraigNode.h"
+#include "ym/Range.h"
 #include "ym/StopWatch.h"
 #include "ym/SatStats.h"
 
@@ -73,8 +74,9 @@ FraigMgrImpl::make_input()
   node->set_input(iid);
   mInputNodes.push_back(node);
   vector<ymuint64> tmp(mPatUsed);
-  for ( int i = 0; i < mPatUsed; ++ i ) {
-    tmp[i] = mRandGen.int32();
+  std::uniform_int_distribution<ymuint64> rd;
+  for ( int i: Range(mPatUsed) ) {
+    tmp[i] = rd(mRandGen);
   }
   node->set_pat(0, mPatUsed, tmp);
   FraigHandle ans = FraigHandle(node, false);
@@ -261,6 +263,7 @@ FraigMgrImpl::add_pat(FraigNode* node)
   // 反例をパタンに加える．
   vector<ymuint64> tmp(1);
   int nn = node_num();
+  std::uniform_int_distribution<int> rd100(0, 99);
   for ( int i = 0; i < nn; ++ i ) {
     FraigNode* node1 = mAllNodes[i];
     if ( node1->is_input() ) {
@@ -272,7 +275,7 @@ FraigMgrImpl::add_pat(FraigNode* node)
 	pat = 0U;
       }
       for ( int b = 1; b < 32; ++ b ) {
-	if ( (mRandGen.int32() % 100) <= 3 ) {
+	if ( rd100(mRandGen) <= 3 ) {
 	  pat ^= (1U << b);
 	}
       }
