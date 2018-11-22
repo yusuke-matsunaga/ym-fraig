@@ -74,7 +74,7 @@ PatHash::add(FraigNode* node)
     auto old_table = mTable;
     auto old_size = mHashSize;
     alloc_table(old_size * 2);
-    for ( int pos: Range(old_size) ) {
+    for ( int pos: Range<>(old_size) ) {
       for ( auto node1 = old_table[pos]; node1; ) {
 	auto tmp = node1;
 	node1 = tmp->mLink2;

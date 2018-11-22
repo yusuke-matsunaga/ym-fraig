@@ -75,7 +75,7 @@ FraigMgrImpl::make_input()
   mInputNodes.push_back(node);
   vector<ymuint64> tmp(mPatUsed);
   std::uniform_int_distribution<ymuint64> rd;
-  for ( int i: Range(mPatUsed) ) {
+  for ( int i: Range<>(mPatUsed) ) {
     tmp[i] = rd(mRandGen);
   }
   node->set_pat(0, mPatUsed, tmp);
