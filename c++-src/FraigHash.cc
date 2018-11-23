@@ -37,7 +37,7 @@ FraigHash::~FraigHash()
 void
 FraigHash::clear()
 {
-  for ( int i: Range<>(mHashSize) ) {
+  for ( int i: Range(mHashSize) ) {
     mTable[i] = nullptr;
   }
   mNum = 0;
@@ -55,7 +55,7 @@ FraigHash::alloc_table(int req_size)
   }
 
   mTable = new FraigNode*[mHashSize];
-  for ( int i: Range<>(mHashSize) ) {
+  for ( int i: Range(mHashSize) ) {
     mTable[i] = nullptr;
   }
 

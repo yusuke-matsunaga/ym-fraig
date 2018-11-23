@@ -172,7 +172,7 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
   //////////////////////////////////////////////////////////////////////
   int ni = network.input_num();
   ASSERT_COND( input_handles.size() == ni );
-  for ( auto i: Range<>(ni) ) {
+  for ( auto i: Range(ni) ) {
     int id = network.input_id(i);
     h_map[id] = input_handles[i];
   }
@@ -181,7 +181,7 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
   // 論理ノードを作成する．
   //////////////////////////////////////////////////////////////////////
   int nl = network.logic_num();
-  for ( auto i: Range<>(nl) ) {
+  for ( auto i: Range(nl) ) {
     int id = network.logic_id(i);
     auto& node = network.node(id);
 
@@ -263,7 +263,7 @@ FraigMgr::import_subnetwork(const BnNetwork& network,
   int no = network.output_num();
   output_handles.clear();
   output_handles.resize(no);
-  for ( auto i: Range<>(no) ) {
+  for ( auto i: Range(no) ) {
     int iid = network.output_src_id(i);
     output_handles[i] = h_map[iid];
   }

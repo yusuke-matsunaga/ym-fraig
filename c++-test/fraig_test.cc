@@ -35,7 +35,7 @@ TEST(EquivTest, EquivTest1)
   FraigMgr mgr(1000);
 
   vector<FraigHandle> input_handles(ni);
-  for ( int i: Range<>(ni) ) {
+  for ( int i: Range(ni) ) {
     input_handles[i] = mgr.make_input();
   }
 
@@ -45,7 +45,7 @@ TEST(EquivTest, EquivTest1)
   vector<FraigHandle> output_handles2(no);
   mgr.import_subnetwork(network2, input_handles, output_handles2);
 
-  for ( int i: Range<>(no) ) {
+  for ( int i: Range(no) ) {
     SatBool3 stat = mgr.check_equiv(output_handles1[i], output_handles2[i]);
     EXPECT_EQ( SatBool3::True, stat );
   }
