@@ -127,10 +127,9 @@ FraigNode::FraigNode() :
   mHash(0),
   mRepNode(this),
   mEqLink(nullptr),
-  mEqTail(nullptr)
+  mEqTail(nullptr),
+  mFanins{nullptr, nullptr}
 {
-  mFanins[0] = nullptr;
-  mFanins[1] = nullptr;
 }
 
 // @brief デストラクタ

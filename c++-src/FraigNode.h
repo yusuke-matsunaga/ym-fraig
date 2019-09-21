@@ -57,7 +57,7 @@ public:
   //////////////////////////////////////////////////////////////////////
 
   /// @brief CNF 上の変数番号を返す．
-  SatVarId
+  SatLiteral
   varid() const;
 
 
@@ -246,7 +246,7 @@ private:
   //////////////////////////////////////////////////////////////////////
 
   // CNF 上の変数番号
-  SatVarId mVarId;
+  SatLiteral mVarId;
 
   // ファンインのノード
   FraigNode* mFanins[2];
@@ -332,7 +332,7 @@ private:
 
 // @brief CNF 上の変数番号を返す．
 inline
-SatVarId
+SatLiteral
 FraigNode::varid() const
 {
   return mVarId;

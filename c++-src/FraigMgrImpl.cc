@@ -119,7 +119,7 @@ FraigMgrImpl::make_and(FraigHandle handle1,
   }
   else {
     // 順番の正規化
-    if ( handle1.varid().val() < handle2.varid().val() ) {
+    if ( handle1.literal().varid() < handle2.literal().varid() ) {
       FraigHandle tmp = handle1;
       handle1 = handle2;
       handle2 = tmp;
@@ -268,7 +268,7 @@ FraigMgrImpl::add_pat(FraigNode* node)
     FraigNode* node1 = mAllNodes[i];
     if ( node1->is_input() ) {
       ymuint64 pat = 0U;
-      if ( mModel[node1->varid().val()] == SatBool3::True ) {
+      if ( mModel[node1->varid()] == SatBool3::True ) {
 	pat = ~0U;
       }
       else {
@@ -425,7 +425,7 @@ FraigMgrImpl::new_node()
   void* p = mAlloc.get_memory(sizeof(FraigNode));
   FraigNode* node = new (p) FraigNode();
   node->mVarId = mSolver.new_variable();
-  ASSERT_COND(node->mVarId.val() == mAllNodes.size() );
+  ASSERT_COND(node->mVarId.varid() == mAllNodes.size() );
   mSolver.freeze_literal(SatLiteral(node->mVarId));
   init_pat(node);
   mAllNodes.push_back(node);
@@ -437,8 +437,6 @@ SatBool3
 FraigMgrImpl::check_const(FraigNode* node,
 			  bool inv)
 {
-  SatVarId id = node->varid();
-
   if ( debug ) {
     cout << "CHECK CONST";
     if ( inv ) {
@@ -447,7 +445,7 @@ FraigMgrImpl::check_const(FraigNode* node,
     else {
       cout << "0";
     }
-    cout << " " << setw(6) << id
+    cout << " " << setw(6) << node->varid()
 	 << "       ";
     cout.flush();
   }
@@ -455,7 +453,7 @@ FraigMgrImpl::check_const(FraigNode* node,
   StopWatch sw;
   sw.start();
 
-  SatLiteral lit(id, inv);
+  SatLiteral lit{node->varid(), inv};
 
   // この関数の戻り値
   SatBool3 code = SatBool3::X;
@@ -493,8 +491,8 @@ FraigMgrImpl::check_equiv(FraigNode* node1,
 			  FraigNode* node2,
 			  bool inv)
 {
-  SatVarId id1 = node1->varid();
-  SatVarId id2 = node2->varid();
+  SatLiteral id1 = node1->varid();
+  SatLiteral id2 = node2->varid();
 
   if ( debug ) {
     cout << "CHECK EQUIV  "
@@ -509,7 +507,7 @@ FraigMgrImpl::check_equiv(FraigNode* node1,
   StopWatch sw;
   sw.start();
 
-  SatLiteral lit1(id1, false);
+  SatLiteral lit1(id1);
   SatLiteral lit2(id2, inv);
 
   // この関数の戻り値

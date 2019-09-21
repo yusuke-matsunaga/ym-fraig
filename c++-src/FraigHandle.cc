@@ -18,24 +18,17 @@ BEGIN_NAMESPACE_FRAIG
 // FraigHandle
 //////////////////////////////////////////////////////////////////////
 
-// @brief ノードの通し番号を得る．
-SatVarId
-FraigHandle::varid() const
-{
-  FraigNode* n = node();
-  if ( n ) {
-    return n->varid();
-  }
-  else {
-    return kSatVarIdIllegal;
-  }
-}
-
 // @brief 対応するリテラルを得る．
 SatLiteral
 FraigHandle::literal() const
 {
-  return SatLiteral(varid(), inv());
+  FraigNode* n = node();
+  if ( n ) {
+    return SatLiteral{n->varid(), inv()};
+  }
+  else {
+    return kSatLiteralX;
+  }
 }
 
 // @brief 代表ハンドルを得る．
@@ -103,7 +96,7 @@ operator<<(ostream& s,
       s << "I" << src.input_id();
     }
     else {
-      s << "A" << src.varid();
+      s << "A" << src.literal();
     }
   }
   return s;

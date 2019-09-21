@@ -18,6 +18,7 @@
 #include "ym/SatBool3.h"
 #include "ym/SatSolverType.h"
 #include "ym/SatSolver.h"
+#include "ym/SatModel.h"
 #include <random>
 
 
@@ -302,7 +303,7 @@ private:
   SatSolver mSolver;
 
   // SAT 用の割り当て格納配列
-  vector<SatBool3> mModel;
+  SatModel mModel;
 
   // sat_sweep 中のシミュレーション回数
   int mSimCount;

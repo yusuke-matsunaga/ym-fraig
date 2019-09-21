@@ -10,9 +10,7 @@
 
 
 #include "ym/fraig.h"
-#include "ym/SatVarId.h"
-#include "ym/HashFunc.h"
-#include "ym/HashSet.h"
+#include "ym/SatLiteral.h"
 
 
 BEGIN_NAMESPACE_FRAIG
@@ -81,10 +79,6 @@ public:
   /// @brief ノードを得る．
   FraigNode*
   node() const;
-
-  /// @brief ノードの変数番号を得る．
-  SatVarId
-  varid() const;
 
   /// @brief 対応するリテラルを得る．
   SatLiteral
@@ -204,7 +198,7 @@ operator!=(FraigHandle src1,
 void
 dump_handle(ostream& s,
 	    FraigHandle src,
-	    HashSet<int>& mark);
+	    unordered_set<int>& mark);
 
 /// @relates FraigHandle
 /// @brief 内容を出力する関数
@@ -351,14 +345,15 @@ operator!=(FraigHandle src1,
 
 END_NAMESPACE_FRAIG
 
-BEGIN_NAMESPACE_YM
+
+BEGIN_NAMESPACE_STD
 
 // FraigHandleをキーにしたハッシュ関数クラスの定義
 template <>
-struct HashFunc<nsFraig::FraigHandle>
+struct hash<YM_NAMESPACE::nsFraig::FraigHandle>
 {
   SizeType
-  operator()(nsFraig::FraigHandle handle) const
+  operator()(YM_NAMESPACE::nsFraig::FraigHandle handle) const
   {
     return handle.hash_func();
   }
