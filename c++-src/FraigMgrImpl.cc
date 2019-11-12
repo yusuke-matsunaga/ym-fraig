@@ -261,6 +261,7 @@ FraigMgrImpl::add_pat(FraigNode* node)
   mHashTable2.clear();
 
   // 反例をパタンに加える．
+  const SatModel& model = mSolver.model();
   vector<ymuint64> tmp(1);
   int nn = node_num();
   std::uniform_int_distribution<int> rd100(0, 99);
@@ -268,7 +269,7 @@ FraigMgrImpl::add_pat(FraigNode* node)
     FraigNode* node1 = mAllNodes[i];
     if ( node1->is_input() ) {
       ymuint64 pat = 0U;
-      if ( mModel[node1->varid()] == SatBool3::True ) {
+      if ( model[node1->varid()] == SatBool3::True ) {
 	pat = ~0U;
       }
       else {
@@ -552,9 +553,8 @@ FraigMgrImpl::check_equiv(FraigNode* node1,
 SatBool3
 FraigMgrImpl::check_condition(SatLiteral lit1)
 {
-  vector<SatLiteral> assumptions(1);
-  assumptions[0] = lit1;
-  SatBool3 ans1 = mSolver.solve(assumptions, mModel);
+  vector<SatLiteral> assumptions{lit1};
+  SatBool3 ans1 = mSolver.solve(assumptions);
 
 #if defined(VERIFY_SATSOLVER)
   SatSolver solver(nullptr, "minisat");
@@ -570,7 +570,7 @@ FraigMgrImpl::check_condition(SatLiteral lit1)
       solver.add_clause( lit2, ~lito);
     }
   }
-  SatBool3 ans2 = solver.solve(assumptions, mModel);
+  SatBool3 ans2 = solver.solve(assumptions);
   if ( ans1 != ans2 ) {
     cout << endl << "ERROR!" << endl;
     cout << "check_condition(" << lit1 << ")" << endl;
@@ -598,10 +598,8 @@ SatBool3
 FraigMgrImpl::check_condition(SatLiteral lit1,
 			      SatLiteral lit2)
 {
-  vector<SatLiteral> assumptions(2);
-  assumptions[0] = lit1;
-  assumptions[1] = lit2;
-  SatBool3 ans1 = mSolver.solve(assumptions, mModel);
+  vector<SatLiteral> assumptions{lit1, lit2};
+  SatBool3 ans1 = mSolver.solve(assumptions);
 
 #if defined(VERIFY_SATSOLVER)
   SatSolver solver(nullptr, "minisat");
@@ -617,7 +615,7 @@ FraigMgrImpl::check_condition(SatLiteral lit1,
       solver.add_clause(lit2, ~lito);
     }
   }
-  SatBool3 ans2 = solver.solve(assumptions, mModel);
+  SatBool3 ans2 = solver.solve(assumptions);
   if ( ans1 != ans2 ) {
     cout << endl << "ERROR!" << endl;
     cout << "check_condition("
