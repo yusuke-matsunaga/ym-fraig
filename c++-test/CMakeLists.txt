@@ -24,12 +24,12 @@ include_directories(
 
 ym_add_gtest ( fraig_FraigMgr_test
   fraig_test.cc
-  $<TARGET_OBJECTS:ym_base_obj_ad>
-  $<TARGET_OBJECTS:ym_logic_obj_ad>
-  $<TARGET_OBJECTS:ym_sat_obj_ad>
-  $<TARGET_OBJECTS:ym_cell_obj_ad>
-  $<TARGET_OBJECTS:ym_bnet_obj_ad>
-  $<TARGET_OBJECTS:ym_fraig_obj_ad>
+  $<TARGET_OBJECTS:ym_base_obj_d>
+  $<TARGET_OBJECTS:ym_logic_obj_d>
+  $<TARGET_OBJECTS:ym_sat_obj_d>
+  $<TARGET_OBJECTS:ym_cell_obj_d>
+  $<TARGET_OBJECTS:ym_bnet_obj_d>
+  $<TARGET_OBJECTS:ym_fraig_obj_d>
   DEFINITIONS
   "-DDATAPATH=\"${PROJECT_SOURCE_DIR}/ym-fraig/testdata/\""
   )
