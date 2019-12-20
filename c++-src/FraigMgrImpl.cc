@@ -40,7 +40,6 @@ END_NONAMESPACE
 // @param[in] solver_type SAT-solver の種類を表すオブジェクト
 FraigMgrImpl::FraigMgrImpl(int sig_size,
 			   const SatSolverType& solver_type) :
-  mAlloc(4096),
   mPatSize(sig_size * 2),
   mPatInit(sig_size),
   mPatUsed(sig_size),
@@ -56,6 +55,9 @@ FraigMgrImpl::FraigMgrImpl(int sig_size,
 // @brief デストラクタ
 FraigMgrImpl::~FraigMgrImpl()
 {
+  for ( auto node: mAllNodes ) {
+    delete node;
+  }
   if ( mLogStream != &cout ) {
     delete mLogStream;
   }
@@ -423,8 +425,7 @@ FraigMgrImpl::compare_pat(FraigNode* node1,
 FraigNode*
 FraigMgrImpl::new_node()
 {
-  void* p = mAlloc.get_memory(sizeof(FraigNode));
-  FraigNode* node = new (p) FraigNode();
+  FraigNode* node = new FraigNode();
   node->mVarId = mSolver.new_variable();
   ASSERT_COND(node->mVarId.varid() == mAllNodes.size() );
   mSolver.freeze_literal(SatLiteral(node->mVarId));

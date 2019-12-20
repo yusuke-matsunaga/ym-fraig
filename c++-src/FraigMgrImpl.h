@@ -14,7 +14,6 @@
 #include "StructHash.h"
 #include "PatHash.h"
 #include "ym/Expr.h"
-#include "ym/SimpleAlloc.h"
 #include "ym/SatBool3.h"
 #include "ym/SatSolverType.h"
 #include "ym/SatSolver.h"
@@ -271,9 +270,6 @@ private:
   //////////////////////////////////////////////////////////////////////
   // データメンバ
   //////////////////////////////////////////////////////////////////////
-
-  // ノードを確保するためのアロケータ
-  SimpleAlloc mAlloc;
 
   // ID 番号をキーにしたノードの配列
   vector<FraigNode*> mAllNodes;
