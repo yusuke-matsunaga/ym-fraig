@@ -10,7 +10,7 @@
 #include "FraigMgrImpl.h"
 #include "FraigNode.h"
 #include "ym/Range.h"
-#include "ym/StopWatch.h"
+#include "ym/Timer.h"
 #include "ym/SatStats.h"
 
 
@@ -452,8 +452,8 @@ FraigMgrImpl::check_const(FraigNode* node,
     cout.flush();
   }
 
-  StopWatch sw;
-  sw.start();
+  Timer timer;
+  timer.start();
 
   SatLiteral lit{node->varid(), inv};
 
@@ -483,7 +483,7 @@ FraigMgrImpl::check_const(FraigNode* node,
       cout << "\tABORTED" << endl;
     }
   }
-  mCheckConstInfo.set_result(code, sw.time().usr_time());
+  mCheckConstInfo.set_result(code, timer.get_time());
   return code;
 }
 
@@ -506,8 +506,8 @@ FraigMgrImpl::check_equiv(FraigNode* node1,
     cout.flush();
   }
 
-  StopWatch sw;
-  sw.start();
+  Timer timer;
+  timer.start();
 
   SatLiteral lit1(id1);
   SatLiteral lit2(id2, inv);
@@ -546,7 +546,7 @@ FraigMgrImpl::check_equiv(FraigNode* node1,
   }
 
  end:
-  mCheckEquivInfo.set_result(code, sw.time().usr_time());
+  mCheckEquivInfo.set_result(code, timer.get_time());
   return code;
 }
 
