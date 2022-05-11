@@ -15,6 +15,8 @@
 
 
 
+set ( DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../testdata/ )
+
 # ===================================================================
 #  テスト用のターゲットの設定
 # ===================================================================
@@ -28,5 +30,5 @@ ym_add_gtest ( fraig_FraigMgr_test
   $<TARGET_OBJECTS:ym_bnet_obj_d>
   $<TARGET_OBJECTS:ym_fraig_obj_d>
   DEFINITIONS
-  "-DDATAPATH=\"${PROJECT_SOURCE_DIR}/ym-fraig/testdata/\""
+  "-DDATAPATH=\"${DATA_DIR}\""
   )
